@@ -9,6 +9,8 @@ const request = require('request');
 
 const restService = express();
 
+var dateFormat = require('dateformat');
+
 restService.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -22,19 +24,22 @@ restService.post('/echo', function(req, res) {
 	var amount = req.body.result && req.body.result.parameters && req.body.result.parameters.amount ? req.body.result.parameters.amount : "1"
 	var phonenumber = req.body.result && req.body.result.parameters && req.body.result.parameters.phonenumber ? req.body.result.parameters.phonenumber : "9999999999"
 	
-	console.log(speech+", "+amount+", "+phonenumber);
+	console.log("Data from google home : "+speech+", "+amount+", "+phonenumber);
+
+	var merchantTranId = + new Date();
+	console.log("merchantTranId : "+merchantTranId );
 	
 	var payload = {
-					   payerVa:"sudeep@icici",
-					   amount:"1.00",
+					   payerVa:phonenumber,
+					   amount:amount,
 					   note:"collect-pay-request",
-					   collectByDate:"27/06/2017 12:30 PM",
+					   collectByDate:dateFormat(new Date(), "dd/mm/yyyy hh:mm TT"),//"27/06/2017 12:30 PM",
 					   merchantId:"109404",
 					   merchantName:"Testmerchant",
 					   subMerchantId:"12234",
 					   subMerchantName:"Test",
 					   terminalId:"5411",
-					   merchantTranId:"12394",
+					   merchantTranId:""+merchantTranId,
 					   billNumber:"54394", 
 					   languageCode:"en"	
 				   }
@@ -47,7 +52,7 @@ restService.post('/echo', function(req, res) {
 	}
 		
 		request({
-		  url: 'http://localhost:8080/fingpay/collectPayServiceGH',
+		  url: 'http://34.205.235.49:8080/fingpay/collectPayServiceGH',
 		  method: 'POST',
 		  json: payload,
 		  headers : instaheaders
