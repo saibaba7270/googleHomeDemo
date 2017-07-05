@@ -20,9 +20,9 @@ restService.get('/echo', function(req, res) {
     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
 	
 	var amount = req.body.result && req.body.result.parameters && req.body.result.parameters.amount ? req.body.result.parameters.amount : "1"
-	var phone-number = req.body.result && req.body.result.parameters && req.body.result.parameters.phone-number ? req.body.result.parameters.phone-number : "9999999999"
+	var phonenumber = req.body.result && req.body.result.parameters && req.body.result.parameters.phonenumber ? req.body.result.parameters.phonenumber : "9999999999"
 	
-	console.log(speech+", "+amount+", "+phone-number);
+	console.log(speech+", "+amount+", "+phonenumber);
 	
 	var payload = {
 					   payerVa:"sudeep@icici",
