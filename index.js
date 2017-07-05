@@ -34,7 +34,7 @@ restService.post('/echo', function(req, res) {
 					   amount:amount,
 					   note:"collect-pay-request",
 					   collectByDate:dateFormat(new Date(), "dd/mm/yyyy hh:mm TT"),//"27/06/2017 12:30 PM",
-					   merchantId:"109404",
+					   merchantId:"131137",
 					   merchantName:"Testmerchant",
 					   subMerchantId:"12234",
 					   subMerchantName:"Test",
