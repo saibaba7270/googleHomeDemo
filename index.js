@@ -52,7 +52,7 @@ restService.post('/echo', function(req, res) {
 	}
 		
 		request({
-		  url: 'http://34.205.235.49:8080/fingpay/collectPayServiceGH',
+		  url: 'http://35.154.169.88:8080/fingpay/collectPayServiceGH',
 		  method: 'POST',
 		  json: payload,
 		  headers : instaheaders
