@@ -9,7 +9,7 @@ const request = require('request');
 
 const restService = express();
 
-var dateFormat = require('dateformat');
+const dateFormat = require('dateformat');
 
 restService.use(bodyParser.urlencoded({
     extended: true
@@ -18,11 +18,30 @@ restService.use(bodyParser.urlencoded({
 restService.use(bodyParser.json());
 
 var slack_message;
-restService.post('/echo', function(req, res) {
-    var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
+restService.post('/upiPayement', function(req, res) {
 	
-	var amount = req.body.result && req.body.result.parameters && req.body.result.parameters.amount ? req.body.result.parameters.amount : "1"
-	var phonenumber = req.body.result && req.body.result.parameters && req.body.result.parameters.phonenumber ? req.body.result.parameters.phonenumber : "9999999999"
+	if(!(req.body.result && req.body.result.parameters && req.body.result.parameters.amount && req.body.result.parameters.amount > 0)){
+		 var finalJson = {
+							speech: "Seems like some problem in amount. Speak again.",
+							displayText: "Seems like some problem in amount. Speak again.",
+							source: 'webhook-echo-sample',
+		                 }
+				  return res.json(finalJson);
+	}
+	
+	if(!(req.body.result && req.body.result.parameters && req.body.result.parameters.phonenumber && req.body.result.parameters.phonenumber.length != 10)){
+		 var finalJson = {
+							speech: "Seems like some problem in phone number. Speak again.",
+							displayText: "Seems like some problem in phone number. Speak again.",
+							source: 'webhook-echo-sample',
+		                 }
+				  return res.json(finalJson);
+	}
+	
+    var speech = req.body.result.parameters.echoText
+	
+	var amount =  req.body.result.parameters.amount
+	var phonenumber = req.body.result.parameters.phonenumber
 	
 	console.log("Data from google home : "+speech+", "+amount+", "+phonenumber);
 
@@ -34,7 +53,7 @@ restService.post('/echo', function(req, res) {
 					   amount:amount,
 					   note:"collect-pay-request",
 					   collectByDate:dateFormat(new Date(), "dd/mm/yyyy hh:mm TT"),//"27/06/2017 12:30 PM",
-					   merchantId:"131137",
+					   merchantId:"109404",
 					   merchantName:"Testmerchant",
 					   subMerchantId:"12234",
 					   subMerchantName:"Test",
@@ -52,7 +71,7 @@ restService.post('/echo', function(req, res) {
 	}
 		
 		request({
-		  url: 'http://35.154.169.88:8080/fingpay/collectPayServiceGH',
+		  url: 'http://34.205.235.49:8080/fingpay/collectPayServiceGH',
 		  method: 'POST',
 		  json: payload,
 		  headers : instaheaders
@@ -72,77 +91,6 @@ restService.post('/echo', function(req, res) {
 				res.send(error);
 			}
       });
-
-	
-	
-	// http://localhost:8080
-	/*request.post('http://localhost:8080/fingpay/collectPayServiceGH', {form: payload,  headers: instaheaders}, function(error, response, body) {
-		console.log( response.statusCode);
-        if (!error && response.statusCode == 200) {
-            // do something
-			console.log(body);
-			slack_message = JSON.parse(body);
-			return res.json({
-				speech: slack_message.message,
-				displayText: speech,
-				source: 'webhook-echo-sample',
-		});
-        } else {
-            // error
-			console.log(error);
-        }
-    });*/
-    
-   /* var options = {
-     host: 'localhost',
-     port: 8080,
-     path: '/fingpay/collectPayServiceGH',
-	 method: 'POST'
-   };
-
-	/*http.get(options, function(resp){
-	  resp.on('data', function(chunk){
-		//do something with chunk
-		  console.log(speech);
-		  slack_message = JSON.parse(chunk);
-		  console.log(slack_message.message);
-		  slack_message = slack_message.message;
-		  console.log(slack_message);
-		});
-	}).on("error", function(e){
-	  console.log("Got error: " + e.message);
-	});
-	
-	const req1 = http.request(options, (res1) => {
-    console.log(`STATUS: ${res1.statusCode}`);
-    console.log(`HEADERS: ${JSON.stringify(res1.headers)}`);
-    res1.setEncoding('utf8');
-	res1.setHeader('deviceMac', '355470062139254');
-	res1.setHeader('trnTimestamp','04/07/2017 15:00:00');
-	res1.setHeader('hash','cRE2Xj7axtTtRIgnOiQCXptEJMhjZ0JXSb4P6N7Hb9Y=');
-	res1.setHeader();
-    res1.on('data', (chunk) => {
-     console.log(`BODY: ${chunk}`);
-	 console.log("BODY : "+JSON.stringify(chunk));
-    });
-   res1.on('end', () => {
-    console.log('No more data in response.');
-   });
-  });
-
-  req1.on('error', (e) => {
-   console.error(`problem with request: ${e.message}`);
-  });
-
-// write data to request body
-req1.write(speech);
-req1.end();*/
-	 /*console.log("At Last : "+slack_message);
-		return res.json({
-			speech: slack_message,
-			displayText: speech,
-			source: 'webhook-echo-sample',
-		});*/
 });
 
 restService.post('/slack-test', function(req, res) {
@@ -198,9 +146,6 @@ restService.post('/slack-test', function(req, res) {
         }
     });
 });
-
-
-
 
 restService.listen((process.env.PORT || 8000), function() {
     console.log("Server up and listening");
