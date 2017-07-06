@@ -57,7 +57,7 @@ restService.post('/upiPayement', function(req, res) {
 					   amount:amount,
 					   note:"collect-pay-request",
 					   collectByDate:dateFormat(new Date(), "dd/mm/yyyy hh:mm TT"),//"27/06/2017 12:30 PM",
-					   merchantId:"109404",
+					   merchantId:"131137",
 					   merchantName:"Testmerchant",
 					   subMerchantId:"12234",
 					   subMerchantName:"Test",
@@ -75,7 +75,7 @@ restService.post('/upiPayement', function(req, res) {
 	}
 		
 		request({
-		  url: 'http://34.205.235.49:8080/fingpay/collectPayServiceGH',
+		  url: 'http://35.154.169.88:8080/fingpay/collectPayServiceGH',
 		  method: 'POST',
 		  json: payload,
 		  headers : instaheaders
