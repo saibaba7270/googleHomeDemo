@@ -21,6 +21,7 @@ var slack_message;
 restService.post('/upiPayement', function(req, res) {
 	console.log("amount : " + req.body.result.parameters.amount);
 	console.log("phone number : " + req.body.result.parameters.phonenumber);
+	console.log("phone number length : " + req.body.result.parameters.phonenumber.toString().length);
 	if(!(req.body.result && req.body.result.parameters && req.body.result.parameters.amount && req.body.result.parameters.amount > 0)){
 		
 		 var finalJson = {
