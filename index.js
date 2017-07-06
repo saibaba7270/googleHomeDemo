@@ -19,9 +19,10 @@ restService.use(bodyParser.json());
 
 var slack_message;
 restService.post('/upiPayement', function(req, res) {
-	
+	console.log("amount : " + req.body.result.parameters.amount);
+	console.log("phone number : " + req.body.result.parameters.phonenumber);
 	if(!(req.body.result && req.body.result.parameters && req.body.result.parameters.amount && req.body.result.parameters.amount > 0)){
-		console.log("amount : " + req.body.result.parameters.amount);
+		
 		 var finalJson = {
 							speech: "Seems like some problem in amount. Speak again.",
 							displayText: "Seems like some problem in amount. Speak again.",
@@ -31,7 +32,7 @@ restService.post('/upiPayement', function(req, res) {
 	}
 	
 	if(!(req.body.result && req.body.result.parameters && req.body.result.parameters.phonenumber && req.body.result.parameters.phonenumber.length != 10)){
-		console.log("amount : " + req.body.result.parameters.phonenumber);
+		
 		 var finalJson = {
 							speech: "Seems like some problem in phone number. Speak again.",
 							displayText: "Seems like some problem in phone number. Speak again.",
