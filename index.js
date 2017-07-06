@@ -71,7 +71,8 @@ restService.post('/upiPayement', function(req, res) {
 					deviceMac:'355470062139254',
 					trnTimestamp:'04/07/2017 15:00:00',
 					hash:'cRE2Xj7axtTtRIgnOiQCXptEJMhjZ0JXSb4P6N7Hb9Y=',
-					JSESSIONID:'EB31FD22BE07EBB3536DA2A4E834B958'
+					JSESSIONID:'EB31FD22BE07EBB3536DA2A4E834B958',
+		                        deviceIMEI:'358222071217176'
 	}
 		
 		request({
