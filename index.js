@@ -31,7 +31,7 @@ restService.post('/upiPayement', function(req, res) {
 				  return res.json(finalJson);
 	}
 	
-	if(!(req.body.result && req.body.result.parameters && req.body.result.parameters.phonenumber && req.body.result.parameters.phonenumber.length != 10)){
+	if(!(req.body.result && req.body.result.parameters && req.body.result.parameters.phonenumber && req.body.result.parameters.phonenumber.toString().length != 10)){
 		
 		 var finalJson = {
 							speech: "Seems like some problem in phone number. Speak again.",
