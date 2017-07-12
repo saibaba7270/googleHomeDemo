@@ -97,7 +97,7 @@ restService.post('/upiPayement', function(req, res) {
 			}
       });
 });
-restService.post('/upiPayementTest', function(req, res) {
+restService.get('/upiPayementTest', function(req, res) {
 	console.log("amount : " + req.body.result.parameters.amount);
 	console.log("phone number : " + req.body.result.parameters.phonenumber);
 	console.log("phone number length : " + req.body.result.parameters.phonenumber.toString().length);
